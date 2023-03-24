@@ -178,7 +178,8 @@ class POSTagger():
             # Make sure tags in test set are in tag_dict to avoid key error during testing
             if all(tag in self.tag_dict for tag in tags):
                 # Convert tags to indices to compare to prediction
-                results[sentence_id]['correct'] = [self.tag_dict[y] for y in tag_lists[sentence_id]]
+                results[sentence_id]['correct'] = \
+                    [self.tag_dict[y] if y in self.tag_dict else self.unk_index for y in tag_lists[sentence_id]]
                 results[sentence_id]['predicted'] = self.viterbi(sentence)
 
             if (i + 1) % 1000 == 0 or i + 1 == len(sentence_ids):
